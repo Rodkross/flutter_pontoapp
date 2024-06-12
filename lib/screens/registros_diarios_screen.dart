@@ -43,10 +43,10 @@ class RegistrosDiariosScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildRegistroItem('Entrada:', ponto.entrada),
-                        _buildRegistroItem('Saída:', ponto.saida),
                         _buildRegistroItem('Início Intervalo:', ponto.inicioIntervalo),
                         _buildRegistroItem('Fim Intervalo:', ponto.fimIntervalo),
                         _buildTotalJornadaItem(jornadaTrabalhada),
+                        _buildRegistroItem('Saída:', ponto.saida),
                       ],
                     ),
                   ),
