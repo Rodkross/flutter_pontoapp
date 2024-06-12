@@ -28,48 +28,52 @@ class PontoScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 20), // Espaço entre o AppBar e o nome do usuário
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              'Olá, $usuario.',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 20), // Espaço entre o AppBar e o nome do usuário
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                'Olá, $usuario.',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 70), // Espaço entre o nome do usuário e os registros
-          _buildRegistroItem(
-            'Entrada:',
-            pontoProvider.formatDateTime(registroAtual?.entrada),
-            registroAtual == null ? pontoProvider.registrarEntrada : null,
-          ),
-          _buildRegistroItem(
-            'Início Intervalo:',
-            pontoProvider.formatDateTime(registroAtual?.inicioIntervalo),
-            registroAtual != null && registroAtual.inicioIntervalo == null ? pontoProvider.registrarInicioIntervalo : null,
-          ),
-          _buildRegistroItem(
-            'Fim Intervalo:',
-            pontoProvider.formatDateTime(registroAtual?.fimIntervalo),
-            registroAtual != null && registroAtual.inicioIntervalo != null && registroAtual.fimIntervalo == null ? pontoProvider.registrarFimIntervalo : null,
-          ),
-          _buildRegistroItem(
-            'Saída:',
-            pontoProvider.formatDateTime(registroAtual?.saida),
-            registroAtual != null && registroAtual.fimIntervalo != null && registroAtual.saida == null ? pontoProvider.registrarSaida : null,
-          ),
-        ],
+            SizedBox(height: 30), // Espaço entre o nome do usuário e os registros
+            _buildRegistroItem(
+              'Entrada:',
+              pontoProvider.formatDateTime(registroAtual?.entrada),
+              registroAtual == null ? pontoProvider.registrarEntrada : null,
+            ),
+            _buildRegistroItem(
+              'Início Intervalo:',
+              pontoProvider.formatDateTime(registroAtual?.inicioIntervalo),
+              registroAtual != null && registroAtual.inicioIntervalo == null ? pontoProvider.registrarInicioIntervalo : null,
+            ),
+            _buildRegistroItem(
+              'Fim Intervalo:',
+              pontoProvider.formatDateTime(registroAtual?.fimIntervalo),
+              registroAtual != null && registroAtual.inicioIntervalo != null && registroAtual.fimIntervalo == null ? pontoProvider.registrarFimIntervalo : null,
+            ),
+            _buildRegistroItem(
+              'Saída:',
+              pontoProvider.formatDateTime(registroAtual?.saida),
+              registroAtual != null && registroAtual.fimIntervalo != null && registroAtual.saida == null ? pontoProvider.registrarSaida : null,
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildRegistroItem(String label, String? value, void Function()? onPressed) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
