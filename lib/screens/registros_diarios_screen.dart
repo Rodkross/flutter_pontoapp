@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/ponto_provider.dart';
 import '../models/ponto.dart';
@@ -21,11 +23,17 @@ class RegistrosDiariosScreen extends StatelessWidget {
               itemCount: registros.length,
               itemBuilder: (context, index) {
                 Ponto ponto = registros[index];
+                String formattedDate =
+                    DateFormat('dd/MM/yyyy').format(ponto.data); // Formatação da data
+
+                // Cálculo do total da jornada trabalhada
+                Duration jornadaTrabalhada = _calcularJornadaTrabalhada(ponto);
+
                 return Card(
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   child: ListTile(
                     title: Text(
-                      'Data: ${pontoProvider.formatDateTime(ponto.data)}',
+                      'Data: $formattedDate', // Exibição da data formatada
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -34,14 +42,11 @@ class RegistrosDiariosScreen extends StatelessWidget {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            'Entrada: ${pontoProvider.formatDateTime(ponto.entrada)}'),
-                        Text(
-                            'Saída: ${pontoProvider.formatDateTime(ponto.saida)}'),
-                        Text(
-                            'Início Intervalo: ${pontoProvider.formatDateTime(ponto.inicioIntervalo)}'),
-                        Text(
-                            'Fim Intervalo: ${pontoProvider.formatDateTime(ponto.fimIntervalo)}'),
+                        _buildRegistroItem('Entrada:', ponto.entrada),
+                        _buildRegistroItem('Saída:', ponto.saida),
+                        _buildRegistroItem('Início Intervalo:', ponto.inicioIntervalo),
+                        _buildRegistroItem('Fim Intervalo:', ponto.fimIntervalo),
+                        _buildTotalJornadaItem(jornadaTrabalhada),
                       ],
                     ),
                   ),
@@ -49,5 +54,59 @@ class RegistrosDiariosScreen extends StatelessWidget {
               },
             ),
     );
+  }
+
+  // Função para calcular a jornada trabalhada
+  Duration _calcularJornadaTrabalhada(Ponto ponto) {
+    Duration jornadaTrabalhada = Duration.zero;
+
+    if (ponto.saida != null && ponto.entrada != null) {
+      jornadaTrabalhada += ponto.saida!.difference(ponto.entrada!);
+    }
+
+    if (ponto.fimIntervalo != null && ponto.inicioIntervalo != null) {
+      jornadaTrabalhada += ponto.fimIntervalo!.difference(ponto.inicioIntervalo!);
+    }
+
+    return jornadaTrabalhada;
+  }
+
+  Widget _buildRegistroItem(String label, DateTime? value) {
+    String formattedValue = value != null ? DateFormat.Hm().format(value) : 'Não registrado';
+    return Row(
+      children: <Widget>[
+        Text(
+          label,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        SizedBox(width: 8),
+        Text(
+          formattedValue,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTotalJornadaItem(Duration jornadaTrabalhada) {
+    String formattedJornada = _formatDuration(jornadaTrabalhada);
+    return Row(
+      children: <Widget>[
+        Text(
+          'Total da Jornada:',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        SizedBox(width: 8),
+        Text(
+          formattedJornada,
+        ),
+      ],
+    );
+  }
+
+  // Função para formatar a duração no formato HH:mm
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes";
   }
 }
