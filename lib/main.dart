@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/tela_inicial.dart';
 import 'providers/ponto_provider.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => PontoProvider(),
       child: MaterialApp(
-        home: TelaInicial(),
+        home: LoginScreen(),
       ),
     );
   }
