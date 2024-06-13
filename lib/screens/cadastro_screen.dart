@@ -1,34 +1,28 @@
 import 'package:flutter/material.dart';
-import 'tela_inicial.dart';
-import 'cadastro_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class CadastroScreen extends StatelessWidget {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _login(BuildContext context) {
+  void _cadastrar(BuildContext context) {
     final String user = _userController.text;
     final String password = _passwordController.text;
 
-    if (user == 'admin' && password == '1234') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TelaInicial(usuario: user),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Usuário ou senha incorretos!')),
-      );
-    }
+    // Aqui você pode adicionar lógica para salvar os dados do novo usuário
+    // Por simplicidade, estamos apenas exibindo uma mensagem e retornando para a tela de login
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Usuário $user cadastrado com sucesso!')),
+    );
+
+    Navigator.pop(context); // Voltar para a tela de login
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Cadastro'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -53,23 +47,8 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _login(context),
-              child: Text('Entrar'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CadastroScreen()),
-                );
-              },
+              onPressed: () => _cadastrar(context),
               child: Text('Cadastrar'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Navegar para a tela de esqueci minha senha
-              },
-              child: Text('Esqueci minha senha'),
             ),
           ],
         ),
