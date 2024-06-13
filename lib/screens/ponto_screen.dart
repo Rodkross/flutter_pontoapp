@@ -37,7 +37,7 @@ class PontoScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                'Olá, $usuario.',
+                'Ponto de $usuario.',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
