@@ -32,7 +32,7 @@ class _TelaInicialState extends State<TelaInicial> {
     return Scaffold(
       body: Center(
         child: Text(
-          'Bem-vindo, ${widget.usuario}!',
+          'Bem-vindo, ${widget.usuario}! 😃',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
