@@ -5,6 +5,24 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void _login(BuildContext context) {
+    final String user = _userController.text;
+    final String password = _passwordController.text;
+
+    if (user == 'admin' && password == '1234') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TelaInicial(usuario: user),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Usuário ou senha incorretos!')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,14 +52,7 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TelaInicial(usuario: _userController.text),
-                  ),
-                );
-              },
+              onPressed: () => _login(context),
               child: Text('Entrar'),
             ),
             TextButton(
